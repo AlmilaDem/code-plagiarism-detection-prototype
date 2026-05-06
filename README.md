@@ -1,37 +1,43 @@
 # Code Submission & Plagiarism Detection System Prototype
 
-This is a static website prototype for a Code Submission & Plagiarism Detection System.
+This repository contains a web-based prototype for a Code Submission and Plagiarism Detection System. The prototype is designed for an academic environment where students submit programming assignments and instructors review similarity reports.
 
-## Purpose
+## Project Overview
 
-The prototype demonstrates the main user interface flows of the planned system:
+The system aims to support academic integrity in programming education by providing a structured workflow for code submission, assignment management, and plagiarism review. Students can view assigned programming tasks and submit source code files, while instructors can manage assignments and examine similarity reports.
 
-- User login
-- Student dashboard
-- Instructor dashboard
-- Code submission
-- Mock similarity report
-- Administrator panel
-- Basic file format validation
+## Prototype Features
 
-## Important Note
+- Login interface with Student, Instructor, and Administrator roles
+- Student dashboard for viewing assigned programming tasks
+- Instructor dashboard for assignment management and submission review
+- Code submission page with basic file format validation
+- Similarity report page with a sample similarity score and side-by-side code comparison
+- Administrator panel with user role overview and security log examples
 
-This is not a fully functional production system. It is a front-end prototype prepared for coursework demonstration and system testing documentation.
+## User Roles
 
-The plagiarism detection result is mocked for demonstration purposes.
+### Student
+Students can view available programming assignments, upload source code files, and check submission status.
+
+### Instructor
+Instructors can create programming assignments, view recent submissions, and review similarity reports.
+
+### Administrator
+Administrators can view system users, roles, and example security log information.
+
+## Technologies Used
+
+- HTML
+- CSS
+- JavaScript
 
 ## How to Run
 
-Open `index.html` in a web browser.
+Open the `index.html` file in a web browser.
 
-No installation is required.
+If the project is hosted with GitHub Pages, open the published website link.
 
-## Suggested Test Status in Report
+## Note
 
-For UI-related flows that are visible in this prototype, the test status can be marked as:
-
-`Passed in prototype`
-
-For features that are not fully implemented, such as real plagiarism detection engine, sandboxed code execution, and performance testing, the test status should be:
-
-`Not executed – not implemented in prototype`
+This prototype demonstrates the main user interface and workflow of the proposed system. It focuses on the front-end representation of the project and uses sample data for demonstration.
