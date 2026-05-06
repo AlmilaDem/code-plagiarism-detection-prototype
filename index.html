@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Submission & Plagiarism Detection System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <h2>CPDS</h2>
+      <p class="subtitle">Prototype</p>
+      <nav>
+        <button class="nav-btn active" data-page="login">Login</button>
+        <button class="nav-btn" data-page="student">Student Dashboard</button>
+        <button class="nav-btn" data-page="instructor">Instructor Dashboard</button>
+        <button class="nav-btn" data-page="submission">Code Submission</button>
+        <button class="nav-btn" data-page="report">Similarity Report</button>
+        <button class="nav-btn" data-page="admin">Admin Panel</button>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <section id="login" class="page active">
+        <div class="card login-card">
+          <h1>Code Submission & Plagiarism Detection System</h1>
+          <p>This prototype demonstrates the main user flows of the system.</p>
+          <label>Email</label>
+          <input type="email" value="student@university.edu" />
+          <label>Password</label>
+          <input type="password" value="password123" />
+          <label>Role</label>
+          <select id="roleSelect">
+            <option value="student">Student</option>
+            <option value="instructor">Instructor</option>
+            <option value="admin">Administrator</option>
+          </select>
+          <button class="primary" id="loginBtn">Login</button>
+          <p class="hint">Demo only. No real authentication is performed.</p>
+        </div>
+      </section>
+
+      <section id="student" class="page">
+        <h1>Student Dashboard</h1>
+        <p class="section-desc">Students can view assigned programming tasks and submit source code files.</p>
+        <div class="grid">
+          <div class="card">
+            <h3>Available Assignment</h3>
+            <p><strong>Title:</strong> Sorting Algorithm Implementation</p>
+            <p><strong>Language:</strong> Python</p>
+            <p><strong>Deadline:</strong> 20 May 2026</p>
+            <span class="status open">Open</span>
+          </div>
+          <div class="card">
+            <h3>Submission Status</h3>
+            <p>Last submission: <strong>Not submitted yet</strong></p>
+            <p>Plagiarism analysis: <strong>Waiting for submission</strong></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="instructor" class="page">
+        <h1>Instructor Dashboard</h1>
+        <p class="section-desc">Instructors can create assignments, monitor submissions, and review similarity reports.</p>
+        <div class="grid">
+          <div class="card">
+            <h3>Create Assignment</h3>
+            <input placeholder="Assignment title" value="Sorting Algorithm Implementation" />
+            <textarea placeholder="Assignment description">Implement bubble sort and merge sort in Python.</textarea>
+            <select>
+              <option>Python</option>
+              <option>Java</option>
+              <option>C++</option>
+              <option>JavaScript</option>
+            </select>
+            <button class="primary">Save Assignment</button>
+          </div>
+          <div class="card">
+            <h3>Recent Submissions</h3>
+            <table>
+              <tr><th>Student</th><th>File</th><th>Status</th></tr>
+              <tr><td>A. Student</td><td>sort.py</td><td><span class="status warning">Review</span></td></tr>
+              <tr><td>B. Student</td><td>solution.py</td><td><span class="status safe">OK</span></td></tr>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="submission" class="page">
+        <h1>Code Submission</h1>
+        <p class="section-desc">This page represents the source code upload and validation process.</p>
+        <div class="card">
+          <label>Select Assignment</label>
+          <select>
+            <option>Sorting Algorithm Implementation</option>
+          </select>
+          <label>Upload Source Code File</label>
+          <input type="file" id="fileInput" accept=".py,.java,.cpp,.js,.cs" />
+          <button class="primary" id="submitBtn">Submit Code</button>
+          <div id="submissionMessage" class="message hidden"></div>
+        </div>
+      </section>
+
+      <section id="report" class="page">
+        <h1>Similarity Report</h1>
+        <p class="section-desc">This mock report shows how instructors would review suspicious similarity results.</p>
+        <div class="card">
+          <div class="report-header">
+            <div>
+              <h3>Assignment: Sorting Algorithm Implementation</h3>
+              <p>Compared files: sort.py and solution.py</p>
+            </div>
+            <div class="similarity-score">78%</div>
+          </div>
+          <div class="progress">
+            <div class="bar" style="width: 78%;"></div>
+          </div>
+          <p><strong>Result:</strong> Potential plagiarism detected. Instructor review is required.</p>
+          <div class="code-compare">
+            <pre>def bubble_sort(arr):
+    for i in range(len(arr)):
+        for j in range(0, len(arr)-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]</pre>
+            <pre>def sort_bubble(data):
+    for i in range(len(data)):
+        for j in range(0, len(data)-i-1):
+            if data[j] > data[j+1]:
+                data[j], data[j+1] = data[j+1], data[j]</pre>
+          </div>
+          <button class="primary">Export PDF Report</button>
+          <button class="secondary">Mark as False Positive</button>
+        </div>
+      </section>
+
+      <section id="admin" class="page">
+        <h1>Admin Panel</h1>
+        <p class="section-desc">Administrators can manage users, roles, system settings, and audit logs.</p>
+        <div class="grid">
+          <div class="card">
+            <h3>User Roles</h3>
+            <table>
+              <tr><th>User</th><th>Role</th></tr>
+              <tr><td>student@university.edu</td><td>Student</td></tr>
+              <tr><td>teacher@university.edu</td><td>Instructor</td></tr>
+              <tr><td>admin@university.edu</td><td>Administrator</td></tr>
+            </table>
+          </div>
+          <div class="card">
+            <h3>Security Log</h3>
+            <p>Invalid file upload blocked.</p>
+            <p>Unauthorized report access attempt denied.</p>
+            <p>Session timeout policy active.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
