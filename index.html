@@ -3,161 +3,641 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Code Submission & Plagiarism Detection System</title>
+  <title>Code Plagiarism Detection System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="layout">
     <aside class="sidebar">
-      <h2>CPDS</h2>
-      <p class="subtitle">Prototype</p>
-      <nav>
-        <button class="nav-btn active" data-page="login">Login</button>
-        <button class="nav-btn" data-page="student">Student Dashboard</button>
-        <button class="nav-btn" data-page="instructor">Instructor Dashboard</button>
-        <button class="nav-btn" data-page="submission">Code Submission</button>
-        <button class="nav-btn" data-page="report">Similarity Report</button>
-        <button class="nav-btn" data-page="admin">Admin Panel</button>
-      </nav>
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="#6366f1"/>
+            <path d="M10 22L16 10L22 22" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M13 17H19" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <h2>CPDS</h2>
+          <p class="subtitle">Prototype v1.0</p>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <p class="nav-label">Main Navigation</p>
+        <nav>
+          <button class="nav-btn active" data-page="login">
+            <span class="nav-icon">&#x1f512;</span>
+            <span>Login</span>
+          </button>
+          <button class="nav-btn" data-page="student">
+            <span class="nav-icon">&#x1f393;</span>
+            <span>Student Dashboard</span>
+          </button>
+          <button class="nav-btn" data-page="instructor">
+            <span class="nav-icon">&#x1f4cb;</span>
+            <span>Instructor Dashboard</span>
+          </button>
+          <button class="nav-btn" data-page="submission">
+            <span class="nav-icon">&#x1f4c4;</span>
+            <span>Code Submission</span>
+          </button>
+          <button class="nav-btn" data-page="report">
+            <span class="nav-icon">&#x1f50d;</span>
+            <span>Similarity Report</span>
+          </button>
+          <button class="nav-btn" data-page="admin">
+            <span class="nav-icon">&#x2699;</span>
+            <span>Admin Panel</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="presentation.html" class="sidebar-link">
+          <span class="nav-icon">&#x1f4f9;</span>
+          <span>View Presentation</span>
+        </a>
+        <div class="status-indicator">
+          <span class="status-dot"></span>
+          System Online
+        </div>
+        <p class="footer-text">CPDS &copy; 2026</p>
+      </div>
     </aside>
 
     <main class="content">
       <section id="login" class="page active">
-        <div class="card login-card">
-          <h1>Code Submission & Plagiarism Detection System</h1>
-          <p>This prototype demonstrates the main user flows of the system.</p>
-          <label>Email</label>
-          <input type="email" value="student@university.edu" />
-          <label>Password</label>
-          <input type="password" value="password123" />
-          <label>Role</label>
-          <select id="roleSelect">
-            <option value="student">Student</option>
-            <option value="instructor">Instructor</option>
-            <option value="admin">Administrator</option>
-          </select>
-          <button class="primary" id="loginBtn">Login</button>
-          <p class="hint">Demo only. No real authentication is performed.</p>
+        <div class="page-header">
+          <h1>Welcome Back</h1>
+          <p class="page-subtitle">Sign in to access your dashboard</p>
+        </div>
+        <div class="login-wrapper">
+          <div class="card login-card glass">
+            <div class="login-decoration">
+              <div class="deco-circle"></div>
+              <div class="deco-circle"></div>
+              <div class="deco-circle"></div>
+            </div>
+            <div class="login-body">
+              <div class="login-icon">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                  <circle cx="24" cy="24" r="24" fill="rgba(99,102,241,0.15)"/>
+                  <path d="M30 32V30C30 27.7909 28.2091 26 26 26H22C19.7909 26 18 27.7909 18 30V32" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+                  <circle cx="24" cy="20" r="4" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h2>Code Plagiarism Detection System</h2>
+              <p class="login-desc">This prototype demonstrates the main user flows of the system.</p>
+              <div class="input-group">
+                <label>Email</label>
+                <div class="input-wrapper">
+                  <span class="input-icon">&#x2709;</span>
+                  <input type="email" value="student@university.edu" />
+                </div>
+              </div>
+              <div class="input-group">
+                <label>Password</label>
+                <div class="input-wrapper">
+                  <span class="input-icon">&#x1f512;</span>
+                  <input type="password" value="password123" />
+                </div>
+              </div>
+              <div class="input-group">
+                <label>Role</label>
+                <div class="input-wrapper">
+                  <span class="input-icon">&#x1f464;</span>
+                  <select id="roleSelect">
+                    <option value="student">Student</option>
+                    <option value="instructor">Instructor</option>
+                    <option value="admin">Administrator</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn btn-primary btn-full" id="loginBtn">
+                <span>Sign In</span>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <p class="hint">Demo only &mdash; no real authentication is performed.</p>
+            </div>
+          </div>
+          <div class="login-features">
+            <div class="feature-item">
+              <div class="feature-icon" style="--fc:#6366f1">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              </div>
+              <div>
+                <strong>Smart Detection</strong>
+                <p>AI-powered code similarity analysis</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon" style="--fc:#10b981">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </div>
+              <div>
+                <strong>Real-time Reports</strong>
+                <p>Instant plagiarism check results</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon" style="--fc:#f59e0b">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </div>
+              <div>
+                <strong>Fast Processing</strong>
+                <p>Analyze hundreds of submissions</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       <section id="student" class="page">
-        <h1>Student Dashboard</h1>
-        <p class="section-desc">Students can view assigned programming tasks and submit source code files.</p>
+        <div class="page-header">
+          <div>
+            <h1>Student Dashboard</h1>
+            <p class="page-subtitle">View your assignments and submission status</p>
+          </div>
+          <div class="header-badge">
+            <span class="badge-dot"></span>
+            <span>2 Active Assignments</span>
+          </div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-icon" style="--sc:#6366f1">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-value">3</span>
+              <span class="stat-label">Total Assignments</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="--sc:#10b981">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-value">1</span>
+              <span class="stat-label">Submitted</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="--sc:#f59e0b">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-value">2</span>
+              <span class="stat-label">Pending</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="--sc:#ef4444">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-value">0</span>
+              <span class="stat-label">Flagged</span>
+            </div>
+          </div>
+        </div>
         <div class="grid">
           <div class="card">
-            <h3>Available Assignment</h3>
-            <p><strong>Title:</strong> Sorting Algorithm Implementation</p>
-            <p><strong>Language:</strong> Python</p>
-            <p><strong>Deadline:</strong> 20 May 2026</p>
-            <span class="status open">Open</span>
+            <div class="card-header">
+              <h3>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 2a7 7 0 0 1 7 7v4l3 3H3l3-3V9a7 7 0 0 1 6-6.9"/></svg>
+                Available Assignment
+              </h3>
+            </div>
+            <div class="assignment-meta">
+              <div class="meta-item">
+                <span class="meta-label">Title</span>
+                <span class="meta-value">Sorting Algorithm Implementation</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Language</span>
+                <span class="lang-badge python">Python</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Deadline</span>
+                <span class="meta-value deadline">May 20, 2026</span>
+              </div>
+            </div>
+            <span class="status status-open">Open for Submission</span>
+            <button class="btn btn-primary btn-sm">Start Assignment</button>
           </div>
           <div class="card">
-            <h3>Submission Status</h3>
-            <p>Last submission: <strong>Not submitted yet</strong></p>
-            <p>Plagiarism analysis: <strong>Waiting for submission</strong></p>
+            <div class="card-header">
+              <h3>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 14 10 10 4 6"/><line x1="12" y1="18" x2="18" y2="18"/></svg>
+                Submission Status
+              </h3>
+            </div>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div>
+                  <p class="timeline-title">Last Submission</p>
+                  <p class="timeline-desc">Not submitted yet</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot pending"></div>
+                <div>
+                  <p class="timeline-title">Plagiarism Analysis</p>
+                  <p class="timeline-desc">Waiting for submission</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot future"></div>
+                <div>
+                  <p class="timeline-title">Final Grade</p>
+                  <p class="timeline-desc">Pending</p>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-secondary btn-sm">Upload Code</button>
           </div>
         </div>
       </section>
 
       <section id="instructor" class="page">
-        <h1>Instructor Dashboard</h1>
-        <p class="section-desc">Instructors can create assignments, monitor submissions, and review similarity reports.</p>
+        <div class="page-header">
+          <div>
+            <h1>Instructor Dashboard</h1>
+            <p class="page-subtitle">Manage assignments, monitor submissions, and review reports</p>
+          </div>
+          <button class="btn btn-primary">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><line x1="9" y1="3" x2="9" y2="15"/><line x1="3" y1="9" x2="15" y2="9"/></svg>
+            New Assignment
+          </button>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-icon" style="--sc:#6366f1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="stat-info"><span class="stat-value">24</span><span class="stat-label">Total Students</span></div></div>
+          <div class="stat-card"><div class="stat-icon" style="--sc:#10b981"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div class="stat-info"><span class="stat-value">18</span><span class="stat-label">Submitted</span></div></div>
+          <div class="stat-card"><div class="stat-icon" style="--sc:#f59e0b"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="stat-info"><span class="stat-value">6</span><span class="stat-label">Pending Review</span></div></div>
+          <div class="stat-card"><div class="stat-icon" style="--sc:#ef4444"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div class="stat-info"><span class="stat-value">3</span><span class="stat-label">Flagged</span></div></div>
+        </div>
         <div class="grid">
-          <div class="card">
-            <h3>Create Assignment</h3>
-            <input placeholder="Assignment title" value="Sorting Algorithm Implementation" />
-            <textarea placeholder="Assignment description">Implement bubble sort and merge sort in Python.</textarea>
-            <select>
-              <option>Python</option>
-              <option>Java</option>
-              <option>C++</option>
-              <option>JavaScript</option>
-            </select>
-            <button class="primary">Save Assignment</button>
+          <div class="card card-wide">
+            <div class="card-header">
+              <h3>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Recent Submissions
+              </h3>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr><th>Student</th><th>File</th><th>Similarity</th><th>Status</th><th></th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><div class="user-cell"><div class="avatar" style="--ac:#f59e0b">AS</div><span>A. Student</span></div></td>
+                    <td><code>sort.py</code></td>
+                    <td><div class="progress-cell"><div class="progress-bar"><div class="progress-fill warning" style="width:78%"></div></div><span>78%</span></div></td>
+                    <td><span class="status status-warning">Review</span></td>
+                    <td><button class="btn btn-ghost btn-xs">View</button></td>
+                  </tr>
+                  <tr>
+                    <td><div class="user-cell"><div class="avatar" style="--ac:#10b981">BS</div><span>B. Student</span></div></td>
+                    <td><code>solution.py</code></td>
+                    <td><div class="progress-cell"><div class="progress-bar"><div class="progress-fill safe" style="width:12%"></div></div><span>12%</span></div></td>
+                    <td><span class="status status-safe">Approved</span></td>
+                    <td><button class="btn btn-ghost btn-xs">View</button></td>
+                  </tr>
+                  <tr>
+                    <td><div class="user-cell"><div class="avatar" style="--ac:#ef4444">CJ</div><span>C. Johnson</span></div></td>
+                    <td><code>algo.py</code></td>
+                    <td><div class="progress-cell"><div class="progress-bar"><div class="progress-fill danger" style="width:92%"></div></div><span>92%</span></div></td>
+                    <td><span class="status status-danger">Flagged</span></td>
+                    <td><button class="btn btn-ghost btn-xs">View</button></td>
+                  </tr>
+                  <tr>
+                    <td><div class="user-cell"><div class="avatar" style="--ac:#6366f1">DW</div><span>D. Williams</span></div></td>
+                    <td><code>main.py</code></td>
+                    <td><div class="progress-cell"><div class="progress-bar"><div class="progress-fill safe" style="width:5%"></div></div><span>5%</span></div></td>
+                    <td><span class="status status-safe">Approved</span></td>
+                    <td><button class="btn btn-ghost btn-xs">View</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
           <div class="card">
-            <h3>Recent Submissions</h3>
-            <table>
-              <tr><th>Student</th><th>File</th><th>Status</th></tr>
-              <tr><td>A. Student</td><td>sort.py</td><td><span class="status warning">Review</span></td></tr>
-              <tr><td>B. Student</td><td>solution.py</td><td><span class="status safe">OK</span></td></tr>
-            </table>
+            <div class="card-header">
+              <h3>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Create Assignment
+              </h3>
+            </div>
+            <div class="input-group">
+              <label>Assignment Title</label>
+              <div class="input-wrapper">
+                <input value="Sorting Algorithm Implementation" />
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Description</label>
+              <div class="input-wrapper">
+                <textarea>Implement bubble sort and merge sort in Python.</textarea>
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Language</label>
+              <div class="input-wrapper">
+                <select><option>Python</option><option>Java</option><option>C++</option><option>JavaScript</option></select>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-full">Save Assignment</button>
           </div>
         </div>
       </section>
 
       <section id="submission" class="page">
-        <h1>Code Submission</h1>
-        <p class="section-desc">This page represents the source code upload and validation process.</p>
-        <div class="card">
-          <label>Select Assignment</label>
-          <select>
-            <option>Sorting Algorithm Implementation</option>
-          </select>
-          <label>Upload Source Code File</label>
-          <input type="file" id="fileInput" accept=".py,.java,.cpp,.js,.cs" />
-          <button class="primary" id="submitBtn">Submit Code</button>
-          <div id="submissionMessage" class="message hidden"></div>
+        <div class="page-header">
+          <div>
+            <h1>Code Submission</h1>
+            <p class="page-subtitle">Upload your source code for plagiarism analysis</p>
+          </div>
+        </div>
+        <div class="submission-layout">
+          <div class="card submission-card">
+            <div class="upload-zone" id="uploadZone">
+              <div class="upload-icon">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M24 32V16M24 16L18 22M24 16L30 22"/>
+                  <rect x="8" y="28" width="32" height="12" rx="4"/>
+                </svg>
+              </div>
+              <h3>Drop your file here</h3>
+              <p>or click to browse</p>
+              <input type="file" id="fileInput" accept=".py,.java,.cpp,.js,.cs" hidden />
+              <button class="btn btn-secondary" id="browseBtn">Browse Files</button>
+              <div class="upload-formats">
+                <span>.py</span><span>.java</span><span>.cpp</span><span>.js</span><span>.cs</span>
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Select Assignment</label>
+              <div class="input-wrapper">
+                <select><option>Sorting Algorithm Implementation</option></select>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-full" id="submitBtn">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 2v12M4 9l5 5 5-5"/><path d="M2 14v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2"/></svg>
+              Submit Code
+            </button>
+            <div id="submissionMessage" class="message hidden"></div>
+          </div>
+          <div class="submission-info">
+            <div class="card info-card">
+              <h4>Submission Guidelines</h4>
+              <ul>
+                <li>Files must be valid source code</li>
+                <li>Maximum file size: 10 MB</li>
+                <li>Accepted formats: Python, Java, C++, JavaScript, C#</li>
+                <li>Analysis typically completes within 2 minutes</li>
+              </ul>
+            </div>
+            <div class="card info-card">
+              <h4>Recent Activity</h4>
+              <div class="activity-item">
+                <div class="activity-dot"></div>
+                <div>
+                  <p class="activity-title">Last submission: sorting_algo.py</p>
+                  <p class="activity-time">2 days ago &middot; Approved</p>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot warning"></div>
+                <div>
+                  <p class="activity-title">Similarity check completed</p>
+                  <p class="activity-time">5 days ago &middot; 23% match</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       <section id="report" class="page">
-        <h1>Similarity Report</h1>
-        <p class="section-desc">This mock report shows how instructors would review suspicious similarity results.</p>
-        <div class="card">
-          <div class="report-header">
-            <div>
-              <h3>Assignment: Sorting Algorithm Implementation</h3>
-              <p>Compared files: sort.py and solution.py</p>
+        <div class="page-header">
+          <div>
+            <h1>Similarity Report</h1>
+            <p class="page-subtitle">Detailed plagiarism analysis and comparison</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-secondary">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H2v12h12V2z"/><path d="M2 6h12"/><path d="M6 2v12"/></svg>
+              Export PDF
+            </button>
+            <button class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 14 10 10 4 6"/><line x1="12" y1="18" x2="18" y2="18"/></svg>
+              Run Analysis
+            </button>
+          </div>
+        </div>
+        <div class="report-summary">
+          <div class="card report-score-card">
+            <div class="score-ring-wrapper">
+              <svg class="score-ring" width="140" height="140" viewBox="0 0 140 140">
+                <circle cx="70" cy="70" r="60" fill="none" stroke="rgba(239,68,68,0.15)" stroke-width="12"/>
+                <circle cx="70" cy="70" r="60" fill="none" stroke="#ef4444" stroke-width="12" stroke-dasharray="377" stroke-dashoffset="83" stroke-linecap="round" transform="rotate(-90 70 70)"/>
+              </svg>
+              <div class="score-text">
+                <span class="score-value">78%</span>
+                <span class="score-label">Similarity</span>
+              </div>
             </div>
-            <div class="similarity-score">78%</div>
+            <div class="score-details">
+              <h3>Sorting Algorithm Implementation</h3>
+              <div class="score-meta">
+                <div><span>Compared:</span> sort.py vs solution.py</div>
+                <div><span>Date:</span> May 12, 2026</div>
+                <div><span>Algorithm:</span> Token-based AST Matching</div>
+              </div>
+              <div class="score-actions">
+                <span class="status status-danger">Potential Plagiarism Detected</span>
+              </div>
+            </div>
           </div>
-          <div class="progress">
-            <div class="bar" style="width: 78%;"></div>
+          <div class="card breakdown-card">
+            <h4>Similarity Breakdown</h4>
+            <div class="breakdown-item">
+              <div class="breakdown-header"><span>Structural Match</span><span>85%</span></div>
+              <div class="progress-bar"><div class="progress-fill danger" style="width:85%"></div></div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-header"><span>Variable Renaming</span><span>72%</span></div>
+              <div class="progress-bar"><div class="progress-fill warning" style="width:72%"></div></div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-header"><span>Logic Structure</span><span>90%</span></div>
+              <div class="progress-bar"><div class="progress-fill danger" style="width:90%"></div></div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-header"><span>Comment Match</span><span>15%</span></div>
+              <div class="progress-bar"><div class="progress-fill safe" style="width:15%"></div></div>
+            </div>
           </div>
-          <p><strong>Result:</strong> Potential plagiarism detected. Instructor review is required.</p>
+        </div>
+        <div class="card code-card">
+          <div class="card-header">
+            <h3>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              Code Comparison
+            </h3>
+            <div class="code-tabs">
+              <button class="code-tab active">sort.py</button>
+              <button class="code-tab">solution.py</button>
+            </div>
+          </div>
           <div class="code-compare">
-            <pre>def bubble_sort(arr):
-    for i in range(len(arr)):
-        for j in range(0, len(arr)-i-1):
-            if arr[j] > arr[j+1]:
-                arr[j], arr[j+1] = arr[j+1], arr[j]</pre>
-            <pre>def sort_bubble(data):
-    for i in range(len(data)):
-        for j in range(0, len(data)-i-1):
-            if data[j] > data[j+1]:
-                data[j], data[j+1] = data[j+1], data[j]</pre>
+            <div class="code-block">
+              <div class="code-header"><span class="code-lang">Python</span><span class="code-matches">12 matches</span></div>
+              <pre><span class="hl">def bubble_sort(arr):</span>
+    <span class="hl">for i in range(len(arr)):</span>
+        <span class="hl">for j in range(0, len(arr)-i-1):</span>
+            <span class="hl">if arr[j] > arr[j+1]:</span>
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    return arr</pre>
+            </div>
+            <div class="code-block">
+              <div class="code-header"><span class="code-lang">Python</span><span class="code-matches match-high">12 matches</span></div>
+              <pre><span class="hl">def sort_bubble(data):</span>
+    <span class="hl">for i in range(len(data)):</span>
+        <span class="hl">for j in range(0, len(data)-i-1):</span>
+            <span class="hl">if data[j] > data[j+1]:</span>
+                data[j], data[j+1] = data[j+1], data[j]
+    return data</pre>
+            </div>
           </div>
-          <button class="primary">Export PDF Report</button>
-          <button class="secondary">Mark as False Positive</button>
+          <div class="code-actions">
+            <button class="btn btn-primary">Export Full Report</button>
+            <button class="btn btn-secondary">Mark as False Positive</button>
+            <button class="btn btn-ghost">Schedule Review</button>
+          </div>
         </div>
       </section>
 
       <section id="admin" class="page">
-        <h1>Admin Panel</h1>
-        <p class="section-desc">Administrators can manage users, roles, system settings, and audit logs.</p>
+        <div class="page-header">
+          <div>
+            <h1>Admin Panel</h1>
+            <p class="page-subtitle">Manage users, roles, and system settings</p>
+          </div>
+          <button class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
+            Add User
+          </button>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-icon" style="--sc:#6366f1"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="stat-info"><span class="stat-value">3</span><span class="stat-label">Total Roles</span></div></div>
+          <div class="stat-card"><div class="stat-icon" style="--sc:#10b981"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="stat-info"><span class="stat-value">28</span><span class="stat-label">Total Users</span></div></div>
+          <div class="stat-card"><div class="stat-icon" style="--sc:#f59e0b"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="stat-info"><span class="stat-value">4</span><span class="stat-label">Active Sessions</span></div></div>
+          <div class="stat-card"><div class="stat-icon" style="--sc:#ef4444"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div class="stat-info"><span class="stat-value">0</span><span class="stat-label">Security Alerts</span></div></div>
+        </div>
         <div class="grid">
-          <div class="card">
-            <h3>User Roles</h3>
-            <table>
-              <tr><th>User</th><th>Role</th></tr>
-              <tr><td>student@university.edu</td><td>Student</td></tr>
-              <tr><td>teacher@university.edu</td><td>Instructor</td></tr>
-              <tr><td>admin@university.edu</td><td>Administrator</td></tr>
-            </table>
+          <div class="card card-wide">
+            <div class="card-header">
+              <h3>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                User Management
+              </h3>
+              <div class="search-box">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="7" r="6"/><line x1="11.5" y1="11.5" x2="15" y2="15"/></svg>
+                <input placeholder="Search users..." />
+              </div>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead><tr><th>User</th><th>Role</th><th>Status</th><th>Last Active</th><th></th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><div class="user-cell"><div class="avatar" style="--ac:#6366f1">SA</div><span>student@university.edu</span></div></td>
+                    <td><span class="role-badge student-role">Student</span></td>
+                    <td><span class="status status-safe">Active</span></td>
+                    <td class="muted">2 min ago</td>
+                    <td><button class="btn btn-ghost btn-xs">Edit</button></td>
+                  </tr>
+                  <tr>
+                    <td><div class="user-cell"><div class="avatar" style="--ac:#f59e0b">TI</div><span>teacher@university.edu</span></div></td>
+                    <td><span class="role-badge instructor-role">Instructor</span></td>
+                    <td><span class="status status-safe">Active</span></td>
+                    <td class="muted">15 min ago</td>
+                    <td><button class="btn btn-ghost btn-xs">Edit</button></td>
+                  </tr>
+                  <tr>
+                    <td><div class="user-cell"><div class="avatar" style="--ac:#ef4444">AD</div><span>admin@university.edu</span></div></td>
+                    <td><span class="role-badge admin-role">Admin</span></td>
+                    <td><span class="status status-safe">Active</span></td>
+                    <td class="muted">1 hour ago</td>
+                    <td><button class="btn btn-ghost btn-xs">Edit</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
           <div class="card">
-            <h3>Security Log</h3>
-            <p>Invalid file upload blocked.</p>
-            <p>Unauthorized report access attempt denied.</p>
-            <p>Session timeout policy active.</p>
+            <div class="card-header">
+              <h3>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Security Log
+              </h3>
+            </div>
+            <div class="log-list">
+              <div class="log-entry">
+                <div class="log-icon log-warning">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="7" fill="#f59e0b"/><line x1="7" y1="4" x2="7" y2="8" stroke="white" stroke-width="1.5"/><circle cx="7" cy="10" r="0.75" fill="white"/></svg>
+                </div>
+                <div><span>Invalid file upload blocked</span><span class="log-time">2 min ago</span></div>
+              </div>
+              <div class="log-entry">
+                <div class="log-icon log-danger">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="7" fill="#ef4444"/><line x1="4.5" y1="4.5" x2="9.5" y2="9.5" stroke="white" stroke-width="1.5"/><line x1="9.5" y1="4.5" x2="4.5" y2="9.5" stroke="white" stroke-width="1.5"/></svg>
+                </div>
+                <div><span>Unauthorized report access denied</span><span class="log-time">1 hour ago</span></div>
+              </div>
+              <div class="log-entry">
+                <div class="log-icon log-safe">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="7" fill="#10b981"/><polyline points="4.5 7 6.5 9 10 5" stroke="white" stroke-width="1.5" fill="none"/></svg>
+                </div>
+                <div><span>Session timeout policy active</span><span class="log-time">3 hours ago</span></div>
+              </div>
+              <div class="log-entry">
+                <div class="log-icon log-safe">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="7" fill="#10b981"/><polyline points="4.5 7 6.5 9 10 5" stroke="white" stroke-width="1.5" fill="none"/></svg>
+                </div>
+                <div><span>System backup completed</span><span class="log-time">6 hours ago</span></div>
+              </div>
+            </div>
           </div>
+        </div>
+        <div class="card system-card">
+          <div class="card-header">
+            <h3>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
+              System Configuration
+            </h3>
+          </div>
+          <div class="config-grid">
+            <div class="config-item"><span>Plagiarism Threshold</span><div class="input-wrapper config-input"><input value="75%" /></div></div>
+            <div class="config-item"><span>Max File Size</span><div class="input-wrapper config-input"><input value="10 MB" /></div></div>
+            <div class="config-item"><span>Allowed Languages</span><div class="input-wrapper config-input"><input value="Python, Java, C++, JS, C#" /></div></div>
+            <div class="config-item"><span>Analysis Mode</span><div class="input-wrapper config-input"><select><option>Token-based AST</option><option>String Matching</option></select></div></div>
+          </div>
+          <button class="btn btn-primary">Save Configuration</button>
         </div>
       </section>
     </main>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>

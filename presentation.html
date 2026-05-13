@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CPDS — Presentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      background: var(--bg-primary);
+      overflow: hidden;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .pres-topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 20px;
+      background: linear-gradient(180deg, rgba(15,17,26,0.85) 0%, transparent 100%);
+      opacity: 1;
+      transition: opacity 0.4s ease;
+      pointer-events: auto;
+    }
+    .pres-topbar.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .pres-topbar-inner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+    .pres-slide-num {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+      min-width: 44px;
+    }
+    .pres-slide-num em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .pres-progress {
+      flex: 1;
+      height: 3px;
+      background: rgba(148,163,184,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .pres-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #818cf8);
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+    .pres-back-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+    .pres-back-link:hover { color: var(--accent); }
+
+    .pres-main {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .pres-container {
+      width: 100%;
+      height: 100%;
+    }
+    .pres-slide {
+      display: none;
+      position: absolute;
+      inset: 0;
+    }
+    .pres-slide.active {
+      display: flex;
+      animation: presFadeIn 0.3s ease;
+    }
+    @keyframes presFadeIn {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .pres-slide-inner {
+      background: var(--bg-card);
+      border: none;
+      border-radius: 0;
+      padding: 60px 60px 80px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .pres-slide-inner.title-slide {
+      justify-content: center;
+      align-items: center;
+    }
+
+    .pres-actions {
+      position: fixed;
+      bottom: 24px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      gap: 10px;
+      opacity: 1;
+      transition: opacity 0.4s ease;
+      pointer-events: auto;
+    }
+    .pres-actions.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .pres-actions .btn {
+      min-width: 110px;
+      padding: 9px 18px;
+      font-size: 13px;
+      backdrop-filter: blur(12px);
+      background: rgba(28,30,50,0.85);
+      border: 1px solid var(--border-light);
+    }
+    .pres-actions .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #818cf8);
+    }
+
+    /* Fullscreen slide content sizing */
+    .pres-slide-header { margin-bottom: 28px; }
+    .pres-slide-header h2 { font-size: 28px; font-weight: 800; letter-spacing: -0.3px; }
+    .pres-slide-number { font-size: 14px; padding: 5px 12px; }
+
+    .title-slide h1 { font-size: 52px; }
+    .title-sub { font-size: 20px; margin-bottom: 32px; }
+    .title-badge { font-size: 13px; padding: 8px 20px; margin-bottom: 24px; }
+    .title-meta { font-size: 15px; gap: 6px; }
+
+    .architecture-desc { font-size: 17px; margin-bottom: 24px; }
+    .module-desc p { font-size: 17px; }
+    .detection-overview p { font-size: 17px; }
+    .data-desc { font-size: 17px; margin-bottom: 24px; }
+
+    .problem-cards { gap: 16px; }
+    .problem-card { padding: 20px; }
+    .problem-card h4 { font-size: 18px; }
+    .problem-card p { font-size: 15px; }
+    .problem-icon { width: 50px; height: 50px; margin-bottom: 16px; }
+
+    .arch-grid { gap: 14px; }
+    .arch-module { padding: 18px; }
+    .arch-icon { width: 48px; height: 48px; margin-bottom: 12px; }
+    .arch-module h4 { font-size: 16px; }
+    .arch-module p { font-size: 14px; }
+
+    .agenda-grid { gap: 12px; }
+    .agenda-item { padding: 16px; }
+    .agenda-num { width: 32px; height: 32px; font-size: 14px; }
+    .agenda-item strong { font-size: 16px; }
+    .agenda-item p { font-size: 14px; }
+
+    .module-feature { padding: 16px; }
+    .mf-icon { width: 46px; height: 46px; font-size: 20px; }
+    .module-feature h4 { font-size: 16px; }
+    .module-feature p { font-size: 14px; }
+
+    .two-col { gap: 20px; }
+    .col-title { font-size: 18px; margin-bottom: 16px; }
+    .feature-list li { font-size: 15px; padding: 6px 0 6px 22px; }
+    .feature-list li::before { top: 14px; width: 6px; height: 6px; }
+
+    .algo-grid { gap: 14px; }
+    .algo-card { padding: 18px; }
+    .algo-number { width: 36px; height: 36px; font-size: 16px; }
+    .algo-card h4 { font-size: 17px; }
+    .algo-card p { font-size: 14px; }
+
+    .process-step { padding: 16px 20px; }
+    .step-num { width: 42px; height: 42px; font-size: 18px; }
+    .step-content h4 { font-size: 16px; }
+    .step-content p { font-size: 14px; }
+    .process-connector { height: 18px; }
+
+    .db-grid { gap: 14px; }
+    .db-card { padding: 18px; }
+    .db-header { font-size: 16px; gap: 10px; }
+    .db-card p { font-size: 14px; }
+
+    .dep-grid { gap: 24px; }
+    .dep-item { font-size: 15px; padding: 7px 0; }
+    .dep-section h4 { font-size: 16px; }
+    .external-badges span { font-size: 14px; padding: 7px 16px; }
+
+    .iface-grid { gap: 14px; }
+    .iface-card { padding: 18px; }
+    .iface-card h4 { font-size: 16px; margin-bottom: 14px; }
+    .iface-row { font-size: 14px; padding: 5px 0; }
+
+    .decision-grid { gap: 16px; }
+    .decision-card { padding: 18px; }
+    .decision-card h4 { font-size: 16px; }
+    .decision-table { font-size: 14px; }
+    .decision-table th, .decision-table td { padding: 8px 12px; }
+
+    .req-grid { gap: 14px; }
+    .req-group { padding: 18px; }
+    .req-group h4 { font-size: 16px; }
+    .req-group li { font-size: 14px; padding: 5px 0 5px 18px; }
+
+    .nfr-grid { gap: 14px; }
+    .nfr-section { padding: 18px; }
+    .nfr-section h4 { font-size: 16px; }
+    .nfr-section li { font-size: 14px; padding: 4px 0 4px 18px; }
+
+    .tech-stack { gap: 14px; }
+    .tech-layer { padding: 14px 20px; }
+    .tech-layer h4 { font-size: 15px; min-width: 90px; }
+    .tech-items span { font-size: 14px; padding: 5px 14px; }
+
+    .qa-content h1 { font-size: 40px; }
+    .qa-content p { font-size: 20px; margin-bottom: 28px; }
+    .qa-contact { font-size: 15px; gap: 6px; }
+
+    .highlight-box { padding: 14px 18px; gap: 12px; }
+    .highlight-box p { font-size: 14px; }
+
+    .purpose-grid { gap: 24px; }
+    .purpose-section h4 { font-size: 18px; margin-bottom: 12px; }
+    .purpose-section p { font-size: 15px; }
+    .purpose-list li { font-size: 15px; padding: 7px 0 7px 22px; }
+    .purpose-list li::before { top: 14px; width: 6px; height: 6px; }
+
+    .user-roles { gap: 14px; }
+    .role-pill { padding: 10px 22px; font-size: 15px; }
+    .role-icon { font-size: 18px; }
+
+    .decision-actions { font-size: 13px; gap: 6px; }
+
+    @media (max-width: 900px) {
+      .pres-slide-inner { padding: 48px 24px 72px; }
+      .title-slide h1 { font-size: 32px; }
+      .pres-slide-header h2 { font-size: 22px; }
+      .problem-card h4 { font-size: 16px; }
+      .problem-card p,
+      .arch-module p,
+      .agenda-item p,
+      .feature-list li,
+      .algo-card p,
+      .step-content p,
+      .db-card p,
+      .iface-row,
+      .req-group li,
+      .nfr-section li,
+      .tech-items span { font-size: 13px; }
+      .problem-cards, .arch-grid, .agenda-grid, .algo-grid,
+      .req-grid, .nfr-grid, .dep-grid, .iface-grid, .decision-grid,
+      .purpose-grid, .two-col { grid-template-columns: 1fr; }
+      .db-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .pres-slide-inner { padding: 40px 14px 64px; }
+      .title-slide h1 { font-size: 24px; }
+      .title-sub { font-size: 16px; }
+      .pres-slide-header h2 { font-size: 18px; }
+      .pres-actions { gap: 6px; }
+      .pres-actions .btn { min-width: 90px; padding: 7px 12px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="pres-topbar" id="topbar">
+    <div class="pres-topbar-inner">
+      <span class="pres-slide-num"><em id="slideCurrent">1</em> / <span id="slideTotal">18</span></span>
+      <div class="pres-progress"><div class="pres-progress-fill" id="presProgress" style="width:5.5%"></div></div>
+    </div>
+    <a href="index.html" class="pres-back-link">&larr; Dashboard</a>
+  </div>
+
+  <div class="pres-main">
+    <div class="pres-container">
+      <!-- SLIDE 1: Title -->
+      <div class="pres-slide active">
+        <div class="pres-slide-inner title-slide">
+          <div class="title-slide-bg"></div>
+          <div class="title-slide-content">
+            <div class="title-badge">Prototype v1.0</div>
+            <h1>Code Submission &amp;<br>Plagiarism Detection<br>System</h1>
+            <p class="title-sub">A comprehensive platform for academic code integrity</p>
+            <div class="title-meta"><span>System Design &amp; Requirements Specification</span><span>Riga, 2026</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 2: Agenda -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="pres-slide-header"><span class="pres-slide-number">02</span><h2>Agenda</h2></div>
+          <div class="agenda-grid">
+            <div class="agenda-item"><span class="agenda-num">01</span><div><strong>Problem Statement</strong><p>Academic integrity challenges in programming education</p></div></div>
+            <div class="agenda-item"><span class="agenda-num">02</span><div><strong>System Purpose &amp; Scope</strong><p>Goals, users, and operational boundaries</p></div></div>
+            <div class="agenda-item"><span class="agenda-num">03</span><div><strong>System Architecture</strong><p>Modules, processes, and component overview</p></div></div>
+            <div class="agenda-item"><span class="agenda-num">04</span><div><strong>Key Modules</strong><p>User Management, Submission, Assignment, Detection</p></div></div>
+            <div class="agenda-item"><span class="agenda-num">05</span><div><strong>Process &amp; Data Design</strong><p>Decomposition, dependencies, database schema</p></div></div>
+            <div class="agenda-item"><span class="agenda-num">06</span><div><strong>Requirements</strong><p>Functional &amp; non-functional specifications</p></div></div>
+            <div class="agenda-item"><span class="agenda-num">07</span><div><strong>Decision Tables</strong><p>System access, validation, plagiarism analysis logic</p></div></div>
+            <div class="agenda-item"><span class="agenda-num">08</span><div><strong>Questions &amp; Discussion</strong></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: Problem Statement -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="pres-slide-header"><span class="pres-slide-number">03</span><h2>Problem Statement</h2></div>
+          <div class="content-full">
+            <div class="problem-cards">
+              <div class="problem-card">
+                <div class="problem-icon" style="--pc:#ef4444"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
+                <h4>Academic Integrity Crisis</h4>
+                <p>Proliferation of online resources, code-sharing platforms, and AI-assisted coding tools has created unprecedented challenges for maintaining academic integrity.</p>
+              </div>
+              <div class="problem-card">
+                <div class="problem-icon" style="--pc:#f59e0b"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                <h4>Manual Review Limitations</h4>
+                <p>Traditional manual review processes are time-consuming, inconsistent, and prone to human error. Students lack clear submission workflows and immediate feedback.</p>
+              </div>
+              <div class="problem-card">
+                <div class="problem-icon" style="--pc:#6366f1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+                <h4>No Unified Platform</h4>
+                <p>Educational institutions lack a centralized system that combines automated submission workflows with advanced plagiarism detection in a single platform.</p>
+              </div>
+            </div>
+            <div class="highlight-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg><p><strong>Our Solution:</strong> A comprehensive, automated approach that streamlines the entire code assignment lifecycle &mdash; from submission to plagiarism analysis to reporting.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: System Purpose & Scope -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="pres-slide-header"><span class="pres-slide-number">04</span><h2>System Purpose &amp; Scope</h2></div>
+          <div class="content-full">
+            <div class="purpose-grid">
+              <div class="purpose-section">
+                <h4>Purpose</h4>
+                <p>Support the submission and analysis of programming assignments in an academic environment. Students upload source code, instructors create assignments and review plagiarism reports.</p>
+                <ul class="purpose-list"><li>Automated code submission workflows</li><li>Advanced plagiarism detection algorithms</li><li>Unified platform for students and instructors</li></ul>
+              </div>
+              <div class="purpose-section">
+                <h4>Scope</h4>
+                <p>The platform automatically processes submitted code, compares it with other submissions using detection techniques, and generates similarity reports.</p>
+                <ul class="purpose-list"><li>Improve academic integrity</li><li>Simplify assignment management</li><li>Support educational institutions</li></ul>
+              </div>
+            </div>
+            <div class="user-roles">
+              <div class="role-pill" style="--rc:#6366f1"><span class="role-icon">&#x1f393;</span> Student</div>
+              <div class="role-pill" style="--rc:#10b981"><span class="role-icon">&#x1f4cb;</span> Instructor</div>
+              <div class="role-pill" style="--rc:#f59e0b"><span class="role-icon">&#x2699;</span> Administrator</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 5: System Architecture -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="pres-slide-header"><span class="pres-slide-number">05</span><h2>System Architecture</h2></div>
+          <div class="content-full">
+            <p class="architecture-desc">Six core modules working together to provide a complete code submission and plagiarism detection workflow.</p>
+            <div class="arch-grid">
+              <div class="arch-module" style="--mc:#6366f1"><div class="arch-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h4>User Management</h4><p>Authentication, RBAC, profiles</p></div>
+              <div class="arch-module" style="--mc:#10b981"><div class="arch-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><h4>Submission Management</h4><p>Upload, validate, store code files</p></div>
+              <div class="arch-module" style="--mc:#f59e0b"><div class="arch-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></div><h4>Assignment Management</h4><p>Create, configure, distribute tasks</p></div>
+              <div class="arch-module" style="--mc:#ef4444"><div class="arch-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><h4>Plagiarism Detection</h4><p>MOSS, AST, fingerprinting algorithms</p></div>
+              <div class="arch-module" style="--mc:#8b5cf6"><div class="arch-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><h4>Report Generation</h4><p>Similarity reports, analytics, export</p></div>
+              <div class="arch-module" style="--mc:#06b6d4"><div class="arch-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div><h4>Notification System</h4><p>Alerts, status updates, reminders</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 6: User Management Module -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="pres-slide-header"><span class="pres-slide-number">06</span><h2>User Management Module</h2></div>
+          <div class="content-full">
+            <div class="module-desc"><p>Handles user authentication and role management within the system. Allows users to register, log in, and access features according to their roles.</p></div>
+            <div class="module-features">
+              <div class="module-feature"><div class="mf-icon" style="--mfc:#6366f1">&#x1f510;</div><div><h4>Registration &amp; Authentication</h4><p>Institutional email registration, SSO integration, multi-factor authentication support</p></div></div>
+              <div class="module-feature"><div class="mf-icon" style="--mfc:#10b981">&#x1f9f0;</div><div><h4>Role-Based Access Control (RBAC)</h4><p>Granular permissions for Students, Instructors, and Administrators with feature-level restrictions</p></div></div>
+              <div class="module-feature"><div class="mf-icon" style="--mfc:#f59e0b">&#x1f464;</div><div><h4>Profile &amp; Privacy Management</h4><p>Contact info, academic affiliations, notification preferences, granular privacy controls</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 7: Submission & Assignment Management -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="pres-slide-header"><span class="pres-slide-number">07</span><h2>Submission &amp; Assignment Management</h2></div>
+          <div class="content-full">
+            <div class="two-col">
+              <div class="col"><h4 class="col-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Submission</h4><ul class="feature-list"><li>Drag-and-drop code upload</li><li>Multi-format support (.java, .cpp, .py, .js, .cs)</li><li>Real-time validation &amp; syntax checking</li><li>Submission history &amp; version tracking</li><li>File type &amp; size validation</li><li>Immediate feedback on status</li></ul></div>
+              <div class="col"><h4 class="col-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg> Assignment</h4><ul class="feature-list"><li>Create assignments with detailed specs</li><li>Configure deadlines &amp; late policies</li><li>Automatic distribution to enrolled students</li><li>Template creation &amp; reuse</li><li>Version control for modifications</li><li>LMS integration (Moodle, Canvas)</li></ul></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 8: Plagiarism Detection Engine -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="pres-slide-header"><span class="pres-slide-number">08</span><h2>Plagiarism Detection Engine</h2></div>
+          <div class="content-full">
+            <div class="detection-overview"><p>Comprehensive plagiarism detection using multiple algorithms with configurable sensitivity thresholds.</p></div>
+            <div class="algo-grid">
+              <div class="algo-card"><div class="algo-number">1</div><h4>MOSS Algorithm</h4><p>Token-based comparison using Measure of Software Similarity for efficient large-scale matching.</p></div>
+              <div class="algo-card"><div class="algo-number">2</div><h4>AST Analysis</h4><p>Abstract Syntax Tree analysis for structural similarity detection beyond surface-level changes.</p></div>
+              <div class="algo-card"><div class="algo-number">3</div><h4>Fingerprinting</h4><p>Efficient large-scale comparison using code fingerprinting techniques for rapid matching.</p></div>
+              <div class="algo-card"><div class="algo-number">4</div><h4>Semantic Analysis</h4><p>Logic pattern detection using machine learning to recognize common plagiarism patterns.</p></div>
+            </div>
+            <div class="highlight-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><p>Confidence scoring with false positive management &mdash; instructors can mark cases, adjust thresholds, and improve accuracy over time.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 9: Report Generation & Notifications -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="pres-slide-header"><span class="pres-slide-number">09</span><h2>Report Generation &amp; Notifications</h2></div>
+          <div class="content-full">
+            <div class="two-col">
+              <div class="col"><h4 class="col-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Report Generation</h4><ul class="feature-list"><li>Detailed similarity reports with matching segments</li><li>Side-by-side code comparison with highlighting</li><li>Multiple algorithm scores &amp; confidence metrics</li><li>Export to PDF, CSV, JSON</li><li>Institutional analytics &amp; trends</li></ul></div>
+              <div class="col"><h4 class="col-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> Notification System</h4><ul class="feature-list"><li>Real-time alerts for suspicious similarities</li><li>Submission status &amp; deadline reminders</li><li>Configurable notification preferences</li><li>Email &amp; in-app notification channels</li><li>Escalation procedures for critical findings</li></ul></div>
+            </div>
+            <div class="highlight-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><p>Formal appeal process with documentation, review procedures, and decision tracking for students to contest plagiarism findings.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 10: Process Decomposition -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="pres-slide-header"><span class="pres-slide-number">10</span><h2>Process Decomposition</h2></div>
+          <div class="content-full">
+            <div class="process-flow">
+              <div class="process-step"><div class="step-num">1</div><div class="step-content"><h4>User Login</h4><p>Authenticate via SSO or local credentials &rarr; role-based access</p></div></div>
+              <div class="process-connector"></div>
+              <div class="process-step"><div class="step-num">2</div><div class="step-content"><h4>Assignment Creation</h4><p>Instructor creates assignment with title, description, deadline, language</p></div></div>
+              <div class="process-connector"></div>
+              <div class="process-step"><div class="step-num">3</div><div class="step-content"><h4>Code Submission</h4><p>Student uploads code &rarr; system validates file type, size, syntax</p></div></div>
+              <div class="process-connector"></div>
+              <div class="process-step"><div class="step-num">4</div><div class="step-content"><h4>Similarity Analysis</h4><p>Normalize, tokenize &rarr; run detection algorithms &rarr; generate scores</p></div></div>
+              <div class="process-connector"></div>
+              <div class="process-step"><div class="step-num">5</div><div class="step-content"><h4>Report &amp; Review</h4><p>Generate similarity reports &rarr; instructor review &rarr; decision recorded</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 11: Data Decomposition -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="pres-slide-header"><span class="pres-slide-number">11</span><h2>Data Decomposition &amp; Database Design</h2></div>
+          <div class="content-full">
+            <p class="data-desc">Dual-database architecture: PostgreSQL for structured data, MongoDB for unstructured code artifacts.</p>
+            <div class="db-grid">
+              <div class="db-card"><div class="db-header"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>users</span></div><p>Accounts with roles and permissions</p></div>
+              <div class="db-card"><div class="db-header"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>assignments</span></div><p>Title, description, deadlines, instructor ref</p></div>
+              <div class="db-card"><div class="db-header"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>submissions</span></div><p>Source code files with upload metadata</p></div>
+              <div class="db-card"><div class="db-header"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>plagiarism_reports</span></div><p>Analysis scores, matched segments, metrics</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 12: System Dependencies -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="pres-slide-header"><span class="pres-slide-number">12</span><h2>System Dependencies</h2></div>
+          <div class="content-full">
+            <div class="dep-grid">
+              <div class="dep-section">
+                <h4>Inter-Module Dependencies</h4>
+                <div class="dep-item"><span class="dep-from">Submission</span><span class="dep-arrow">&rarr;</span><span class="dep-to">Plagiarism Detection</span></div>
+                <div class="dep-item"><span class="dep-from">Plagiarism Detection</span><span class="dep-arrow">&rarr;</span><span class="dep-to">Report Generation</span></div>
+                <div class="dep-item"><span class="dep-from">Report Generation</span><span class="dep-arrow">&rarr;</span><span class="dep-to">Notification System</span></div>
+                <div class="dep-item"><span class="dep-from">Assignment Mgmt</span><span class="dep-arrow">&rarr;</span><span class="dep-to">Submission Module</span></div>
+                <div class="dep-item"><span class="dep-from">User Management</span><span class="dep-arrow">&rarr;</span><span class="dep-to">All Modules</span></div>
+              </div>
+              <div class="dep-section">
+                <h4>Inter-Process Dependencies</h4>
+                <div class="dep-item"><span class="dep-from">Code Submission</span><span class="dep-arrow">&rarr;</span><span class="dep-to">Validation &amp; Storage</span></div>
+                <div class="dep-item"><span class="dep-from">Validation &amp; Storage</span><span class="dep-arrow">&rarr;</span><span class="dep-to">Plagiarism Analysis</span></div>
+                <div class="dep-item"><span class="dep-from">Plagiarism Analysis</span><span class="dep-arrow">&rarr;</span><span class="dep-to">Report Generation</span></div>
+                <div class="dep-item"><span class="dep-from">Report Generation</span><span class="dep-arrow">&rarr;</span><span class="dep-to">Instructor Review</span></div>
+              </div>
+            </div>
+            <div class="dep-section" style="margin-top:12px">
+              <h4>External Integrations</h4>
+              <div class="external-badges"><span>LMS / SSO</span><span>Email Gateway</span><span>PostgreSQL</span><span>MongoDB</span><span>Cloud Infra</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 13: Interface Design -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="pres-slide-header"><span class="pres-slide-number">13</span><h2>Interface Design</h2></div>
+          <div class="content-full">
+            <div class="iface-grid">
+              <div class="iface-card"><h4>Submission Module</h4><div class="iface-row"><span class="iface-label">In</span><span>Source code file, assignment ID</span></div><div class="iface-row"><span class="iface-label">Out</span><span>Stored submission, confirmation</span></div></div>
+              <div class="iface-card"><h4>Plagiarism Detection</h4><div class="iface-row"><span class="iface-label">In</span><span>Submitted source code files</span></div><div class="iface-row"><span class="iface-label">Out</span><span>Similarity scores, matched segments</span></div></div>
+              <div class="iface-card"><h4>Submission Process</h4><div class="iface-row"><span class="iface-label">In</span><span>Source code file, assignment ID</span></div><div class="iface-row"><span class="iface-label">Out</span><span>Stored submission record</span></div></div>
+              <div class="iface-card"><h4>Analysis Process</h4><div class="iface-row"><span class="iface-label">In</span><span>Submitted source code files</span></div><div class="iface-row"><span class="iface-label">Out</span><span>Similarity score, report</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 14: Decision Tables -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="pres-slide-header"><span class="pres-slide-number">14</span><h2>Decision Tables</h2></div>
+          <div class="content-full">
+            <div class="decision-grid">
+              <div class="decision-card">
+                <h4>System Access</h4>
+                <table class="decision-table"><thead><tr><th>Condition</th><th>1</th><th>2</th></tr></thead><tbody><tr><td>System available?</td><td><span class="dec-no">N</span></td><td><span class="dec-yes">Y</span></td></tr></tbody></table>
+                <div class="decision-actions"><div><span class="dec-act">D1</span> Show "Unavailable"</div><div><span class="dec-act">D2</span> Allow access</div></div>
+              </div>
+              <div class="decision-card">
+                <h4>Assignment Selection</h4>
+                <table class="decision-table"><thead><tr><th>Condition</th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead><tbody><tr><td>Selected?</td><td class="dec-no">N</td><td class="dec-no">N</td><td class="dec-yes">Y</td><td class="dec-yes">Y</td></tr><tr><td>Deadline OK?</td><td class="dec-no">N</td><td class="dec-yes">Y</td><td class="dec-no">N</td><td class="dec-yes">Y</td></tr></tbody></table>
+                <div class="decision-actions"><div><span class="dec-act">D1</span> Cannot select</div><div><span class="dec-act">D2</span> Allow submission</div></div>
+              </div>
+              <div class="decision-card">
+                <h4>Submission Validation</h4>
+                <table class="decision-table"><thead><tr><th>Condition</th><th>1</th><th>2</th></tr></thead><tbody><tr><td>File valid?</td><td class="dec-no">N</td><td class="dec-yes">Y</td></tr></tbody></table>
+                <div class="decision-actions"><div><span class="dec-act">D1</span> Show error</div><div><span class="dec-act">D2</span> Accept &amp; store</div></div>
+              </div>
+              <div class="decision-card">
+                <h4>Plagiarism Result</h4>
+                <table class="decision-table"><thead><tr><th>Condition</th><th>1</th><th>2</th></tr></thead><tbody><tr><td>Score above threshold?</td><td class="dec-no">N</td><td class="dec-yes">Y</td></tr></tbody></table>
+                <div class="decision-actions"><div><span class="dec-act">D1</span> Mark acceptable</div><div><span class="dec-act">D2</span> Flag for review</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 15: Functional Requirements -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="pres-slide-header"><span class="pres-slide-number">15</span><h2>Functional Requirements</h2></div>
+          <div class="content-full">
+            <div class="req-grid">
+              <div class="req-group"><h4>1. User Management</h4><ul><li>Registration &amp; SSO auth</li><li>Role-based access (RBAC)</li><li>Profile &amp; privacy</li><li>Multi-factor authentication</li></ul></div>
+              <div class="req-group"><h4>2. Assignment Mgmt</h4><ul><li>Create &amp; configure assignments</li><li>Deadline &amp; late policies</li><li>LMS distribution</li><li>Templates &amp; version control</li></ul></div>
+              <div class="req-group"><h4>3. Code Submission</h4><ul><li>Drag-and-drop upload</li><li>Multi-format support</li><li>Syntax validation</li><li>Version tracking</li></ul></div>
+              <div class="req-group"><h4>4. Plagiarism Detection</h4><ul><li>MOSS, AST, fingerprinting</li><li>Cross-submission comparison</li><li>Similarity visualization</li><li>Confidence scoring</li></ul></div>
+              <div class="req-group"><h4>5. Reports</h4><ul><li>Detailed similarity reports</li><li>Institutional analytics</li><li>Export (PDF, CSV, JSON)</li><li>Appeal process</li></ul></div>
+              <div class="req-group"><h4>6. Notifications</h4><ul><li>Real-time alerts</li><li>Deadline reminders</li><li>Email &amp; in-app</li><li>Configurable preferences</li></ul></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 16: Non-Functional Requirements -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="pres-slide-header"><span class="pres-slide-number">16</span><h2>Non-Functional Requirements</h2></div>
+          <div class="content-full">
+            <div class="nfr-grid">
+              <div class="nfr-section"><h4>Security &amp; Privacy</h4><ul><li>GDPR, FERPA, COPPA compliance</li><li>TLS 1.3 &amp; AES-256 encryption</li><li>Multi-factor authentication</li><li>Code confidentiality</li><li>Incident response</li></ul></div>
+              <div class="nfr-section"><h4>Performance</h4><ul><li>&lt;2s response (95%)</li><li>Analysis in &lt;30s</li><li>1000 concurrent users</li><li>10K submissions/day</li><li>99.9% uptime</li></ul></div>
+              <div class="nfr-section"><h4>UX &amp; Accessibility</h4><ul><li>Responsive design</li><li>WCAG 2.1 AA</li><li>Multi-language (EN, LV)</li><li>Intuitive navigation</li><li>Error handling</li></ul></div>
+              <div class="nfr-section"><h4>Technical</h4><ul><li>PostgreSQL + MongoDB</li><li>LMS API integration</li><li>Daily backups (30-day)</li><li>Cloud deployment</li><li>Docker &amp; K8s ready</li></ul></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 17: Technology Stack -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="pres-slide-header"><span class="pres-slide-number">17</span><h2>Technology Stack</h2></div>
+          <div class="content-full">
+            <div class="tech-stack">
+              <div class="tech-layer"><h4>Frontend</h4><div class="tech-items"><span>HTML5 / CSS3</span><span>JavaScript</span><span>Responsive</span><span>WCAG 2.1</span></div></div>
+              <div class="tech-layer"><h4>Backend</h4><div class="tech-items"><span>Node.js / Python</span><span>REST API</span><span>MOSS</span><span>AST Parser</span></div></div>
+              <div class="tech-layer"><h4>Database</h4><div class="tech-items"><span>PostgreSQL</span><span>MongoDB</span><span>Redis</span></div></div>
+              <div class="tech-layer"><h4>Infrastructure</h4><div class="tech-items"><span>AWS / Azure / GCP</span><span>Docker</span><span>K8s</span><span>Terraform</span></div></div>
+              <div class="tech-layer"><h4>Integrations</h4><div class="tech-items"><span>Moodle / Canvas</span><span>SSO / LDAP</span><span>SMTP</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 18: Q&A -->
+      <div class="pres-slide">
+        <div class="pres-slide-inner">
+          <div class="qa-slide">
+            <div class="qa-bg"></div>
+            <div class="qa-content">
+              <div class="qa-icon"><svg width="56" height="56" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" stroke="rgba(99,102,241,0.3)" stroke-width="2" fill="none"/><circle cx="32" cy="32" r="20" stroke="rgba(99,102,241,0.2)" stroke-width="2" fill="none"/><text x="32" y="40" text-anchor="middle" fill="#6366f1" font-size="28" font-weight="bold" font-family="Inter">?</text></svg></div>
+              <h1>Questions &amp; Discussion</h1>
+              <p>Thank you for your attention!</p>
+              <div class="qa-contact"><span>Code Submission &amp; Plagiarism Detection System</span><span>Prototype v1.0 &mdash; Riga, 2026</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pres-actions" id="presActions">
+    <button class="btn btn-secondary pres-btn" id="presPrev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> Previous</button>
+    <button class="btn btn-primary pres-btn" id="presNext">Next <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+  </div>
+
+  <script>
+    let currentSlide = 0
+    const slides = document.querySelectorAll('.pres-slide')
+    const slideCurrent = document.getElementById('slideCurrent')
+    const slideTotal = document.getElementById('slideTotal')
+    const presProgress = document.getElementById('presProgress')
+    const topbar = document.getElementById('topbar')
+    const actions = document.getElementById('presActions')
+    const prevBtn = document.getElementById('presPrev')
+    const nextBtn = document.getElementById('presNext')
+
+    let idleTimer = null
+    function showUI() {
+      topbar.classList.remove('hidden')
+      actions.classList.remove('hidden')
+      clearTimeout(idleTimer)
+      idleTimer = setTimeout(() => {
+        topbar.classList.add('hidden')
+        actions.classList.add('hidden')
+      }, 2500)
+    }
+
+    function goToSlide(index) {
+      if (index < 0) index = 0
+      if (index >= slides.length) index = slides.length - 1
+      if (index === currentSlide) return
+      currentSlide = index
+      slides.forEach((s, i) => s.classList.toggle('active', i === currentSlide))
+      slideCurrent.textContent = currentSlide + 1
+      presProgress.style.width = ((currentSlide + 1) / slides.length * 100) + '%'
+      showUI()
+    }
+
+    if (slides.length) {
+      slideTotal.textContent = slides.length
+      prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1))
+      nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1))
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+          e.preventDefault(); goToSlide(currentSlide + 1)
+        }
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault(); goToSlide(currentSlide - 1)
+        }
+      })
+
+      document.addEventListener('mousemove', showUI)
+      document.addEventListener('click', showUI)
+      showUI()
+    }
+  </script>
+</body>
+</html>
